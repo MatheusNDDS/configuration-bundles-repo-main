@@ -1,2 +1,2 @@
-# lunux-modular-post-install-script
-A modular script designed to automate the post-installation of Linux systems.
+# Configuration Bundles Manager (C.F.G.B)
+It is something like a package manager created to facilitate the post-installation of GNU/Linux systems.
