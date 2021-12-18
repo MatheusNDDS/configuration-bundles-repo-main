@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $1 = setup ]; then
-sudo cp -r "$(pwd)/cfgb.sh" /bin/
+sudo cp -r "$(pwd)/cfgb.sh" /bin/cfgb
 echo C.F.G.B Manager instalado
 exit
 fi
