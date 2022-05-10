@@ -1,14 +1,15 @@
 #!/bin/bash
 clear
 u=$(whoami) ; if [ $u != root ]; then echo 'Error: this command needs run with sudo: 
-Ex: sudo command/script' ; exit ; fi
+Ex: sudo command/script' ; exit 1 ; fi
 
+#setup Script
 if [ $1 = setup ]; then
 if [ $2 = "" ] ; then echo  ; exit ; fi ;
-sudo cp -r "$(pwd)/cfgb_script.sh" /bin/cfgb ; sudo chmod +x /bin/cfgb
 sudo mkdir /usr/share/cfgb ; sudo mkdir /usr/share/cfgb/bundles ;
+sudo cp -r "$(pwd)/cfgb_script.sh" /bin/cfgb ; sudo chmod +x /bin/cfgb ;
 
-#setting configs
+#setting configs variables
 sudo echo -e "
 export repo=$3
 export h=/home/$2
@@ -16,8 +17,11 @@ export pm=$4" > /usr/share/cfgb/cfg ; echo C.F.G.B Manager instaled;
 exit
 fi
 
-#Global variables
-export name=cfgb ; export cp="sudo cp -r";export rm="sudo rm -rf";export prt="echo -e" ; export pdir=/usr/share/$name ; export id=$2 ; export mkd='sudo mkdir' ; export bnd_dir=$pdir/bundles;export add_ppa="sudo add-apt-repository"
+#configurations debug
+if [ $1 = -l ]; then cat /usr/share/cfgb/cfg ; exit ; fi
+
+#Global variables (mini shell)
+export name=cfgb ; export cp="sudo cp -r";export rm="sudo rm -rf";export prt="echo -e" ; export pdir=/usr/share/$name ; export id=$2 ; export mkd='sudo mkdir' ; export bnd_dir=$pdir/bundles;export add_ppa="sudo add-apt-repository" ; export fp="flatpak install flathub"
 
 #Setup
 cfg=$(cat $pdir/cfg); $cfg ; cd $bnd_dir ;
@@ -56,4 +60,5 @@ cd $bnd_dir/$a/ ; bash recipe
 echo '-=- '$a' Instaled -=-' ;  done ;
 fi
 
+#Clean bundles folder
 $rm $bnd_dir/*
